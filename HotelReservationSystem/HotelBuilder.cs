@@ -18,24 +18,39 @@ namespace HotelReservationSystem
             Console.WriteLine("Hotel added successfully");
             hotelDictionary.Add(hotelName, hotel);
         }
-     /*   public void cheapestHotel(DateTime date1,DateTime date2)
+        public void cheapestHotel(DateTime date1,DateTime date2)
         {
             double minRate=0;
             double hotelRate;
-            int numberOfDays = (date2-date1).Days;
             Hotel hotelWithMinimumRate = null;
+            DateTime startDay = date1;
 
-            foreach(Hotel hotel in hotelDictionary.Values)
+            foreach (Hotel hotel in hotelDictionary.Values)
             {
-                hotelRate = numberOfDays * hotel.Rate;
-                if(minRate==0 || minRate > hotelRate)
+                hotelRate = 0;
+                date1 = startDay;
+
+                while (date2 != date1)
                 {
-                    hotelRate = minRate;
+                    string day = date1.DayOfWeek.ToString();
+                    if (day.Equals("Saturday"))
+                    {
+                        hotelRate += hotel.WeekEndRate;
+                    }
+                    else
+                    {
+                        hotelRate += hotel.WeekDayRate;
+                    }
+                    date1=date1.AddDays(1);
+                }
+                if (minRate == 0 || minRate > hotelRate)
+                {
+                    minRate = hotelRate;
                     hotelWithMinimumRate = hotel;
                 }
             }
-            Console.WriteLine(hotelWithMinimumRate.HotelName + ", Total Rate : " + hotelWithMinimumRate.Rate * numberOfDays);
-        }*/
+            Console.WriteLine(hotelWithMinimumRate.HotelName + ", Total Rate : " + minRate);
+        }
 
     }
 }

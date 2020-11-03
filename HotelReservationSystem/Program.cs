@@ -12,7 +12,7 @@ namespace HotelReservationSystem
             hotelBuilder.addHotel("Lakewood", 110, 90,"Regular");
             hotelBuilder.addHotel("Bridgewood", 150, 50,"Regular");
             hotelBuilder.addHotel("Ridgewood", 220, 150,"Regular");
-            //hotelBuilder.cheapestHotel(DateTime.Parse("03/14/2020"),DateTime.Parse("03/16/2020"));
+            hotelBuilder.cheapestHotel(DateTime.Parse("03/14/2020"),DateTime.Parse("03/16/2020"));
 
         }
     }
