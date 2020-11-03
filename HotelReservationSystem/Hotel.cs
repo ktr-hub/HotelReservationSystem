@@ -7,7 +7,8 @@ namespace HotelReservationSystem
     public class Hotel
     {
         public string HotelName{ get; set; }
-        public double Rate { get; set; }
+        public double WeekDayRate { get; set; }
+        public double WeekEndRate { get; set; }
         public string CustomerType { get; set; }
         
     }
