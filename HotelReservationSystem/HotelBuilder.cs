@@ -65,12 +65,13 @@ namespace HotelReservationSystem
 
             var records = from hotel in mapHotelToTotalRate
                           where hotel.Value == minValue
+                          orderby hotel.Key.Rating descending
                           select hotel;
 
             Console.WriteLine("\n\nAvailable Cheap Hotels : ");
-            foreach(var record in records)
+            foreach(var record in records.Take(1))
             {
-                Console.WriteLine("Hotel : " + record.Key.HotelName +"-->Total Rate : "+mapHotelToTotalRate[record.Key]);
+                Console.WriteLine("\n\n-->Hotel \t\t: " + record.Key.HotelName+"\n  -->Rating \t\t: " + record.Key.Rating +"\n  -->Total Rate \t: " +mapHotelToTotalRate[record.Key]);
             }
 
         }
