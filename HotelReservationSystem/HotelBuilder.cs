@@ -1,56 +1,77 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HotelReservationSystem
 {
     public class HotelBuilder
     {
+        /// <summary>
+        /// Maps hotel name to its class
+        /// </summary>
         Dictionary<string, Hotel> hotelDictionary = new Dictionary<string, Hotel>();
-        public void addHotel(string hotelName, double rate, double rate2, string customerType)
+
+        /// <summary>
+        /// UC1-addHotel
+        /// </summary>
+        /// <param name="hotelName"></param>
+        /// <param name="WeekDayRate"></param>
+        /// <param name="WeekEndRate"></param>
+        /// <param name="customerType"></param>
+        public void addHotel(string hotelName, double WeekDayRate, double WeekEndRate, string customerType)
         {
             Hotel hotel = new Hotel();
             hotel.HotelName = hotelName;
-            hotel.WeekDayRate = rate;
-            hotel.WeekEndRate = rate2;
+            hotel.WeekDayRate = WeekDayRate;
+            hotel.WeekEndRate = WeekEndRate;
             hotel.CustomerType = customerType;
             Console.WriteLine("Hotel added successfully");
             hotelDictionary.Add(hotelName, hotel);
         }
-        public void cheapestHotel(DateTime date1,DateTime date2)
+
+        /// <summary>
+        /// UC2-cheapestHotel
+        /// </summary>
+        /// <param name="checkInDate"></param>
+        /// <param name="checkOutDate"></param>
+        public void cheapestHotel(DateTime checkInDate,DateTime checkOutDate)
         {
-            double minRate=0;
-            double hotelRate;
-            Hotel hotelWithMinimumRate = null;
-            DateTime startDay = date1;
+            //Finding hotel rate for each hotel between specified dates and finally printing least of them
+
+            Dictionary<Hotel, double> mapHotelToTotalRate = new Dictionary<Hotel, double>();
 
             foreach (Hotel hotel in hotelDictionary.Values)
             {
-                hotelRate = 0;
-                date1 = startDay;
+                double hotelRate = 0;
+                DateTime dateIterator = checkInDate;
 
-                while (date2 != date1)
+                while (checkOutDate >= dateIterator)
                 {
-                    string day = date1.DayOfWeek.ToString();
-                    if (day.Equals("Saturday"))
-                    {
-                        hotelRate += hotel.WeekEndRate;
-                    }
-                    else
-                    {
-                        hotelRate += hotel.WeekDayRate;
-                    }
-                    date1=date1.AddDays(1);
+                    string day = dateIterator.DayOfWeek.ToString();
+
+                    hotelRate += (day.Equals("Saturday")) ? hotel.WeekEndRate : hotel.WeekDayRate;
+
+                    dateIterator = dateIterator.AddDays(1);
                 }
-                if (minRate == 0 || minRate > hotelRate)
-                {
-                    minRate = hotelRate;
-                    hotelWithMinimumRate = hotel;
-                }
+
+                mapHotelToTotalRate.Add(hotel, hotelRate);
             }
-            Console.WriteLine(hotelWithMinimumRate.HotelName + ", Total Rate : " + minRate);
-        }
 
+            var minValue = mapHotelToTotalRate.Values.Min();
+
+
+            var records = from hotel in mapHotelToTotalRate
+                          where hotel.Value == minValue
+                          select hotel;
+
+            Console.WriteLine("\n\nAvailable Cheap Hotels : ");
+            foreach(var record in records)
+            {
+                Console.WriteLine("Hotel : " + record.Key.HotelName +"-->Total Rate : "+mapHotelToTotalRate[record.Key]);
+            }
+
+        }
     }
 }
