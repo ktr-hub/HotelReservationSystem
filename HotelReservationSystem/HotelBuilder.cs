@@ -20,13 +20,14 @@ namespace HotelReservationSystem
         /// <param name="WeekDayRate"></param>
         /// <param name="WeekEndRate"></param>
         /// <param name="customerType"></param>
-        public void addHotel(string hotelName, double WeekDayRate, double WeekEndRate, string customerType)
+        public void addHotel(string hotelName, double WeekDayRate, double WeekEndRate, string customerType,double rating)
         {
             Hotel hotel = new Hotel();
             hotel.HotelName = hotelName;
             hotel.WeekDayRate = WeekDayRate;
             hotel.WeekEndRate = WeekEndRate;
             hotel.CustomerType = customerType;
+            hotel.Rating = rating;
             Console.WriteLine("Hotel added successfully");
             hotelDictionary.Add(hotelName, hotel);
         }

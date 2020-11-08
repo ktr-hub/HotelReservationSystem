@@ -10,6 +10,8 @@ namespace HotelReservationSystem
         public double WeekDayRate { get; set; }
         public double WeekEndRate { get; set; }
         public string CustomerType { get; set; }
-        
+        public double Rating { get; set; }
+
+
     }
 }
