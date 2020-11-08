@@ -20,14 +20,15 @@ namespace HotelReservationSystem
         /// <param name="WeekDayRate"></param>
         /// <param name="WeekEndRate"></param>
         /// <param name="customerType"></param>
-        public void addHotel(string hotelName, double WeekDayRate, double WeekEndRate, string customerType,double rating)
+        public void addHotel(string hotelName, double WeekDayRate, double WeekEndRate, double rating)
         {
             Hotel hotel = new Hotel();
+
             hotel.HotelName = hotelName;
+            hotel.Rating = rating;
             hotel.WeekDayRate = WeekDayRate;
             hotel.WeekEndRate = WeekEndRate;
-            hotel.CustomerType = customerType;
-            hotel.Rating = rating;
+
             Console.WriteLine("Hotel added successfully");
             hotelDictionary.Add(hotelName, hotel);
         }
@@ -61,8 +62,6 @@ namespace HotelReservationSystem
             }
 
             var minValue = mapHotelToTotalRate.Values.Min();
-
-
             var records = from hotel in mapHotelToTotalRate
                           where hotel.Value == minValue
                           orderby hotel.Key.Rating descending
